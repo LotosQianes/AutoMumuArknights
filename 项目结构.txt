@@ -16,6 +16,7 @@ project_root/
 ├── src/                     # 存放源代码的文件夹
 │     ├── icon_operations/           # 存放操作逻辑的文件夹
 │          ├── arknights.py          # 存放进入游戏“明日方舟”的操作逻辑
+│          ├── ...
 │   ├── __init__.py          # 使该文件夹成为Python包
 │   ├── mumu_adb.py          # MuMuADB类代码文件
 │   ├── general_operations.py           # 用于总控神经网络结果后的操作
@@ -23,6 +24,8 @@ project_root/
 │
 ├── data/                    # 用于存放数据文件的文件夹
 │   ├── training_data/       # 用于存储训练数据（如果是神经网络相关的话）
+│        ├── game_icon/           # 游戏图标
 │   └── test_data/           # 用于存储测试数据（如果有）
+│        ├── game_icon/           # 游戏图标
 │
 └── main.py                  # 主程序文件，启动自动化脚本的入口

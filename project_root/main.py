@@ -11,16 +11,13 @@ def start_monitoring():
     # 测试对 MuMu 模拟器进行截图
     monitoring.capture_screenshot(max_retries=3, retry_delay=5)
 
-    # 测试对 MuMu 模拟器进行监控
-    monitoring.monitor_and_display(max_retries=3, retry_delay=5, display_interval=1)
-
 def start_general_operations():
     """ 用于总控神经网络结果后的操作 """
     # 实例化 GeneralOperations 类
     general_operations = GeneralOperations(adb_path="D:\\Program Files\\Netease\\MuMuPlayer-12.0\\shell\\adb.exe", adb_port="16384")
 
     # 测试对 MuMu 模拟器的操作总控
-    general_operations.arknights()
+    general_operations.operations()
 
 def main():
     # 实例化 MuMuADB 类，指定ADB路径和端口

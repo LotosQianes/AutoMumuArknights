@@ -1,6 +1,7 @@
 from cnn_model import create_cnn_model
 from inference import load_model, predict
 import os
+import cv2
 
 def main():
 	# 加载已经训练好的AI模型
@@ -11,8 +12,16 @@ def main():
         return
 
     # 对截图进行图像分类（假设你已获得截图路径）
-    test_img_path = os.path.join(os.path.dirname(__file__), '..', 'screenshots', 'raw_screenshots', '明日方舟.png')
-    img_name = predict(model, test_img_path)
+    test_img_path = os.path.join(os.path.dirname(__file__),'..', 'data', 'training_data', 'game_icon', 'wake.png')
+    test_img_path = os.path.abspath(test_img_path)
+
+    # 读取图像（确保它是一个有效的图像文件）
+    img = cv2.imread(test_img_path)
+    if img is None:
+        print(f"无法读取图像：{test_img_path}")
+        return None
+
+    img_name = predict(model, img)
     print("图像分类预测结果：", img_name)
 
 if __name__ == "__main__":

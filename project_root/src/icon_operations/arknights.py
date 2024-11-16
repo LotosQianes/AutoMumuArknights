@@ -15,6 +15,7 @@ class ArknightsOperation:
         self.target_img_path = os.path.abspath(self.target_img_path)
         self.monitoring = MuMuMonitor(adb_path=self.adb_path, adb_port=self.adb_port,
          model_path="E:\\python_work\\expand_time\\adb\\project_root\\models\\cnn_model\\cnn_model.h5")
+        self.arknights_switch = True
 
     def _setup_logging(self):
         log_directory = os.path.join(os.path.dirname(__file__),'..', '..', 'debug')
@@ -80,3 +81,4 @@ class ArknightsOperation:
             # 模拟点击目标位置（使用adb）
             mumu_adb = MuMuADB(adb_path=self.adb_path, adb_port=self.adb_port)
             mumu_adb.click(pt[0], pt[1])
+            print(f"我作为arknights已经进行过点击了,地点在{pt[0], pt[1]}")

@@ -56,7 +56,6 @@ def train_model(train_dir, validation_dir, model_save_path):
         train_generator,             # 训练数据生成器
         epochs=30,                   # 训练30个epochs
         validation_data=validation_generator,  # 验证数据
-        validation_steps=50         # 验证步数，根据验证集的大小设置
     )
 
     # 保存模型

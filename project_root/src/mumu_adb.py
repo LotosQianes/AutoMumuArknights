@@ -75,3 +75,7 @@ class MuMuADB:
             self.logger.info(f"成功模拟点击，坐标: ({x}, {y})")
         else:
             self.logger.error(f"点击失败，错误信息: {result.stderr}")
+
+if __name__ == '__main__':
+    mumu_adb = MuMuADB(adb_path="D:\\Program Files\\Netease\\MuMuPlayer-12.0\\shell\\adb.exe", adb_port="16384")
+    mumu_adb.click(975, 792)
