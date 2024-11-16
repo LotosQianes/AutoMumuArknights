@@ -2,6 +2,7 @@ import threading # 启动多线程
 from src.mumu_adb import MuMuADB
 from src.monitoring import MuMuMonitor
 from src.general_operations import GeneralOperations
+from src.console import start_console
 
 def start_monitoring():
     """ 管理屏幕截图，监控 """
@@ -26,6 +27,10 @@ def main():
     # 测试连接到 MuMu 模拟器
     mumu_adb.connect_to_mumu(max_retries=3, retry_delay=5)
 
+    # 启动控制台线程
+    console_thread = threading.Thread(target=start_console, daemon=True)
+    console_thread.start()
+
     # 启动监控线程
     monitoring_thread = threading.Thread(target=start_monitoring,)
     monitoring_thread.start()
@@ -37,6 +42,7 @@ def main():
     # 等待所有线程完成
     monitoring_thread.join()
     operations_thread.join()
+    console_thread.join()
 
 if __name__ == "__main__":
     main()

@@ -78,4 +78,4 @@ class MuMuADB:
 
 if __name__ == '__main__':
     mumu_adb = MuMuADB(adb_path="D:\\Program Files\\Netease\\MuMuPlayer-12.0\\shell\\adb.exe", adb_port="16384")
-    mumu_adb.click(975, 792)
+    mumu_adb.click(216, 636)

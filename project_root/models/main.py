@@ -12,7 +12,7 @@ def main():
         return
 
     # 对截图进行图像分类（假设你已获得截图路径）
-    test_img_path = os.path.join(os.path.dirname(__file__),'..', 'data', 'training_data', 'game_icon', 'wake.png')
+    test_img_path = os.path.join(os.path.dirname(__file__),'..', 'data', 'training_data', 'game_icon', 'infrastructure.png')
     test_img_path = os.path.abspath(test_img_path)
 
     # 读取图像（确保它是一个有效的图像文件）
