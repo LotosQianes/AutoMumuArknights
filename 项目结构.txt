@@ -5,7 +5,7 @@ project_root/
 │   └── error.log            # 错误日志文件
 │
 ├── models/                  # 用于存放神经网络相关的文件
-│   ├── model.py             # 神经网络的模型文件（假设你需要模型训练的话）
+│   ├── model.py             # 神经网络的模型文件
 │   ├── training.py          # 用于模型训练的脚本
 │   └── inference.py         # 用于模型推理的脚本
 │
@@ -25,9 +25,9 @@ project_root/
 │   └── monitoring.py        # 新增的监控功能文件，负责模拟器画面监控、截图等操作   
 │
 ├── data/                    # 用于存放数据文件的文件夹
-│   ├── training_data/       # 用于存储训练数据（如果是神经网络相关的话）
+│   ├── training_data/       # 用于存储训练数据
 │        ├── game_icon/           # 游戏图标
-│   └── test_data/           # 用于存储测试数据（如果有）
+│   └── test_data/           # 用于存储测试数据
 │        ├── game_icon/           # 游戏图标
 │
 └── main.py                  # 主程序文件，启动自动化脚本的入口
