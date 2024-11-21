@@ -3,23 +3,22 @@ import time
 import numpy as np
 import os
 import logging
-import time
 from src.mumu_adb import MuMuADB
 from src.monitoring import MuMuMonitor
 
-class LmbReceiptOperation:
+class ReceptionCluesOperation:
     def __init__(self, adb_path="D:\\Program Files\\Netease\\MuMuPlayer-12.0\\shell\\adb.exe", adb_port="16384"):
         self.adb_path, self.adb_port = adb_path, adb_port
         self.logger = logging.getLogger()
         self._setup_logging()
-        self.target_img_path = os.path.join(os.path.dirname(__file__),'..', '..', 'screenshots', 'raw_screenshots', 'lmb_receipt.png')
+        self.target_img_path = os.path.join(os.path.dirname(__file__),'..', '..', 'screenshots', 'raw_screenshots', 'reception_clues.png')
         self.target_img_path = os.path.abspath(self.target_img_path)
         self.monitoring = MuMuMonitor(adb_path=self.adb_path, adb_port=self.adb_port,
          model_path="E:\\python_work\\expand_time\\adb\\project_root\\models\\cnn_model\\cnn_model.h5")
-        self.whether_lmb_receipt = 0
+        self.whether_reception_clues = 0
 
     def _setup_logging(self):
-        log_directory = os.path.join(os.path.dirname(__file__),'..', '..', 'debug')
+        log_directory = os.path.join(os.path.dirname(__file__), '..', '..', 'debug')
         if not os.path.exists(log_directory):
             os.makedirs(log_directory)
         
@@ -44,7 +43,7 @@ class LmbReceiptOperation:
     def perform_action(self):
         """ 进行与 Start 游戏图标的相关操作 """
         # 启动共享监控线程
-        print("收钱收钱！")
+        print("准备收取会客室线索！")
         self.monitoring.start_monitoring()
  
         # 等待直到游戏加载完成（这里使用轮询的方式）
@@ -72,16 +71,16 @@ class LmbReceiptOperation:
                     center = (top_left[0] + w // 2, top_left[1] + h // 2)
                     # 模拟点击
                     mumu_adb = MuMuADB(adb_path=self.adb_path, adb_port=self.adb_port)
-                    print(f"找到龙门币收取地址，位置: {center}")
-                    self.logger.info(f"找到龙门币收取图标，位置: {center}")
+                    print(f"找到会客室线索收集界面入口，位置: {center}")
+                    self.logger.info(f"找到会客室线索收集界面入口，位置: {center}")
                     mumu_adb.click(center[0], center[1])
-                    print(f"狠狠收钱，中心位置位置在{center}")
+                    print(f"已经进入会客室线索收集界面，中心位置位置在{center}")
                     break  # 退出循环
                 # 如果未找到，重复尝试5次后退出循环
                 else:
-                    self.whether_lmb_receipt += 1
-                    print(f"钱呢？钱呢？尝试次数 {self.whether_lmb_receipt}")
-                    if self.whether_lmb_receipt >= 5:
+                    self.whether_reception_clues += 1
+                    print(f"未找到会客室线索收集界面入口，尝试次数 {self.whether_reception_clues}")
+                    if self.whether_reception_clues >= 5:
                         break
 
             # 如果没有找到匹配项，就等待一段时间再检查（避免过于频繁地轮询）
@@ -89,4 +88,4 @@ class LmbReceiptOperation:
 
         # 退出监控进程
         self.monitoring.stop_monitoring()
-        self.whether_lmb_receipt = 0
+        self.whether_reception_clues = 0

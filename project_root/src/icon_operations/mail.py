@@ -3,7 +3,6 @@ import time
 import numpy as np
 import os
 import logging
-import time
 from src.mumu_adb import MuMuADB
 from src.monitoring import MuMuMonitor
 
