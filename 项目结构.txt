@@ -7,22 +7,24 @@ project_root/
 ├── models/                  # 用于存放神经网络相关的文件
 │   ├── model.py             # 神经网络的模型文件
 │   ├── training.py          # 用于模型训练的脚本
-│   └── inference.py         # 用于模型推理的脚本
+│   ├── inference.py         # 用于模型推理的脚本
+│   └── ocr.py             # OCR模型加载与推理代码
 │
 ├── screenshots/             # 截图保存的文件夹
 │   ├── raw_screenshots/     # 用于存储从模拟器截图的原始图片
 │   └── processed_screenshots/  # 存储已经处理（如裁剪、转换格式等）的截图
 │
 ├── src/                     # 存放源代码的文件夹
-│     ├── icon_operations/           # 存放操作逻辑的文件夹
-│          ├── __init__.py           # 打包
-│          ├── arknights.py          # 存放进入游戏“明日方舟”的操作逻辑
-│          ├── ...
+│   ├── icon_operations/           # 存放操作逻辑的文件夹
+│        ├── __init__.py           # 打包
+│        ├── arknights.py          # 存放进入游戏“明日方舟”的操作逻辑
+│        ├── ...
 │   ├── __init__.py           # 打包
 │   ├── mumu_adb.py          # MuMuADB类代码文件
 │   ├── general_operations.py           # 用于总控神经网络结果后的操作
 │   ├── console.py          # 控制台，只显示用于测试时使用的print语句
-│   └── monitoring.py        # 新增的监控功能文件，负责模拟器画面监控、截图等操作   
+│   ├── monitoring.py        # 新增的监控功能文件，负责模拟器画面监控、截图等操作   
+│   └── ui .py          # 前端UI文件
 │
 ├── data/                    # 用于存放数据文件的文件夹
 │   ├── training_data/       # 用于存储训练数据
