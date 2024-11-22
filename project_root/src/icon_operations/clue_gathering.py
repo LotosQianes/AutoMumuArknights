@@ -41,49 +41,43 @@ class ClueGatheringOperation:
         self.logger.setLevel(logging.DEBUG)
 
     def perform_action(self):
-        """ 进行与 Start 游戏图标的相关操作 """
-        # 启动共享监控线程
+        """ 进行与线索收集相关的操作 """
         print("发现有线索待收集。")
         self.monitoring.start_monitoring()
- 
-        # 等待直到游戏加载完成（这里使用轮询的方式）
-        while True:
-            # 检查是否有新的屏幕截图可用
-            if self.monitoring.img is not None:
-                # 执行模板匹配
-                target_img = cv2.imread(self.target_img_path, cv2.IMREAD_COLOR)
-                if target_img is None:
-                    self.logger.error(f"无法读取目标图像: {self.target_img_path}")
-                    continue
- 
-                target_img_gray = cv2.cvtColor(target_img, cv2.COLOR_BGR2GRAY)
-                img_gray = cv2.cvtColor(self.monitoring.img, cv2.COLOR_BGR2GRAY)
-                res = cv2.matchTemplate(img_gray, target_img_gray, cv2.TM_CCOEFF_NORMED)
-                threshold = 0.8  # 匹配阈值
-                loc = np.where(res >= threshold)
- 
-                # 如果找到了匹配项，就点击它并退出循环
-                if loc[0].size > 0:
-                    top_left = (loc[1].min(), loc[0].min())  # 获取匹配区域的一个点（左上角）
-                    # 获取目标图像的宽度和高度
-                    h, w = target_img_gray.shape
-                    # 修改 top_left 为中心点
-                    center = (top_left[0] + w // 2, top_left[1] + h // 2)
-                    # 发现线索图标
-                    mumu_adb = MuMuADB(adb_path=self.adb_path, adb_port=self.adb_port)
-                    print(f"发现线索收集，位置: {center}，准备进入会客室")
-                    self.logger.info(f"找到信赖收取图标，位置: {center}")
-                    return True  # 退出循环
-                # 如果未找到，重复尝试5次后退出循环
-                else:
-                    self.whether_clue_gathering += 1
-                    print(f"并没有线索等待收集，尝试次数 {self.whether_clue_gathering}")
-                    if self.whether_clue_gathering >= 5:
-                        return False
 
-            # 如果没有找到匹配项，就等待一段时间再检查（避免过于频繁地轮询）
-            time.sleep(1)  # 等待1秒再检查
+        try:
+            while self.whether_clue_gathering < 5:
+                if self.monitoring.img is not None:
+                    target_img = cv2.imread(self.target_img_path, cv2.IMREAD_COLOR)
+                    if target_img is None:
+                        self.logger.error(f"无法读取目标图像: {self.target_img_path}")
+                        continue
 
-        # 退出监控进程
-        self.monitoring.stop_monitoring()
-        self.whether_clue_gathering = 0
+                    target_img_gray = cv2.cvtColor(target_img, cv2.COLOR_BGR2GRAY)
+                    img_gray = cv2.cvtColor(self.monitoring.img, cv2.COLOR_BGR2GRAY)
+                    res = cv2.matchTemplate(img_gray, target_img_gray, cv2.TM_CCOEFF_NORMED)
+                    threshold = 0.8
+                    loc = np.where(res >= threshold)
+
+                    if loc[0].size > 0:
+                        top_left = (loc[1].min(), loc[0].min())
+                        h, w = target_img_gray.shape
+                        center = (top_left[0] + w // 2, top_left[1] + h // 2)
+
+                        mumu_adb = MuMuADB(adb_path=self.adb_path, adb_port=self.adb_port)
+                        print(f"发现线索收集，位置: {center}，准备进入会客室")
+                        self.logger.info(f"找到信赖收取图标，位置: {center}")
+                        return True
+
+                    else:
+                        self.whether_clue_gathering += 1
+                        print(f"并没有线索等待收集，尝试次数 {self.whether_clue_gathering}")
+                        if self.whether_clue_gathering >= 5:
+                            return False
+
+                time.sleep(1)
+
+        finally:
+            # 确保监控停止
+            self.monitoring.stop_monitoring()
+            self.whether_clue_gathering = 0

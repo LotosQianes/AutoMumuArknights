@@ -18,6 +18,10 @@ def start_general_operations():
     # 实例化 GeneralOperations 类
     general_operations = GeneralOperations(adb_path="D:\\Program Files\\Netease\\MuMuPlayer-12.0\\shell\\adb.exe", adb_port="16384")
 
+def start_ui_thread():
+    """运行 UI 的线程入口"""
+    start_ui()
+
 def main():
     # 实例化 MuMuADB 类，指定ADB路径和端口
     mumu_adb = MuMuADB(adb_path="D:\\Program Files\\Netease\\MuMuPlayer-12.0\\shell\\adb.exe", adb_port="16384")
@@ -37,12 +41,15 @@ def main():
     operations_thread = threading.Thread(target=start_general_operations)
     operations_thread.start()
 
-    start_ui()
+    # 启动 UI 线程
+    ui_thread = threading.Thread(target=start_ui_thread, daemon=True)
+    ui_thread.start()
 
     # 等待所有线程完成
     monitoring_thread.join()
     operations_thread.join()
     console_thread.join()
+    ui_thread.join()
 
 
 if __name__ == "__main__":
